@@ -5,7 +5,7 @@ class Site:
     def __init__(self, source, dest, parsers=None):
         self.source = Path(source)
         self.dest = Path(dest)
-        self.parsers = []
+        self.parsers = parsers or []
 
     def create_dir(self, path):
         directory = self.dest/path.relative_to(self.source)
@@ -27,7 +27,7 @@ class Site:
     def run_parser(self, path):
         parser = self.load_parser(path.suffix)
 
-        if parser:
+        if parser is not None:
             parser.parse(path, self.source, self.dest)
         else:
-            raise NotImplementedError
+            print("Not Implemented")
